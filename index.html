@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Memories 💗</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle, #fff5fa, #f8cadd, #e9a8c6);
+      color: #783c5b;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    #intro {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      background: #f9d9e8;
+      transition: opacity 1s, visibility 1s;
+    }
+
+    .vortex {
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: repeating-conic-gradient(
+        from 0deg,
+        #d875a5 0deg 15deg,
+        #fce7f1 15deg 30deg,
+        #b94f83 30deg 45deg,
+        #f7bfd8 45deg 60deg
+      );
+      -webkit-mask-image: radial-gradient(
+        circle, transparent 0 12%, #000 13% 100%
+      );
+      mask-image: radial-gradient(
+        circle, transparent 0 12%, #000 13% 100%
+      );
+      animation: spin 3s linear infinite, pulse 2s ease-in-out infinite alternate;
+      box-shadow: 0 0 45px #df82ad;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      to { scale: 1.18; }
+    }
+
+    #intro button {
+      background: #bd5988;
+      color: white;
+      border: 0;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-size: 17px;
+      cursor: pointer;
+    }
+
+    main {
+      padding: 55px 18px;
+    }
+
+    h1 { color: #a84676; }
+
+    .envelopes {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 35px;
+      margin-top: 45px;
+    }
+
+    .envelope-card {
+      width: min(100%, 290px);
+      padding: 22px;
+      border-radius: 22px;
+      background: #fff8fc;
+      box-shadow: 0 10px 30px #a84c7620;
+    }
+
+    .envelope {
+      position: relative;
+      width: 210px;
+      height: 135px;
+      margin: 20px auto;
+      background: #e99bbd;
+      border-radius: 8px;
+      cursor: pointer;
+      perspective: 600px;
+    }
+
+    .envelope::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: #f5c7dc;
+      clip-path: polygon(0 0, 100% 0, 50% 58%);
+      transform-origin: top;
+      transition: transform .7s;
+      z-index: 2;
+    }
+
+    .envelope::after {
+      content: "♥";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: #a63f70;
+      font-size: 32px;
+      z-index: 3;
+    }
+
+    .envelope.open::before {
+      transform: rotateX(180deg);
+    }
+
+    .paper {
+      display: none;
+      background: white;
+      border-radius: 15px;
+      padding: 18px;
+      margin-top: 18px;
+      animation: rise .7s ease;
+      text-align: right;
+    }
+
+    .paper.show { display: block; }
+
+    @keyframes rise {
+      from { transform: translateY(25px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .portrait {
+      width: 100%;
+      max-width: 200px;
+      min-height: 100px;
+      object-fit: cover;
+      border-radius: 15px;
+      background: #f8e4ee;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      padding: 12px;
+      border: 1px solid #e3a3c2;
+      border-radius: 12px;
+      font: inherit;
+      resize: vertical;
+    }
+
+    .save, .open-btn {
+      border: 0;
+      border-radius: 20px;
+      padding: 11px 18px;
+      background: #c85f91;
+      color: white;
+      cursor: pointer;
+      font: inherit;
+      margin-top: 10px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #96647c;
+    }
+  </style>
+</head>
+<body>
+
+  <section id="intro">
+    <div class="vortex"></div>
+    <h2>حكايتنا لسه بتبدأ 💗</h2>
+    <button onclick="enterSite()">ادخل عالم ذكرياتنا</button>
+  </section>
+
+  <main>
+    <h1>Our Little World 💌</h1>
+    <p>كل واحد فينا عنده حكاية تستاهل تتحكي</p>
+
+    <div class="envelopes">
+      <section class="envelope-card">
+        <h2>حكاية مريم 🌷</h2>
+        <div class="envelope" onclick="openLetter('maryam')"></div>
+        <button class="open-btn" onclick="openLetter('maryam')">
+          افتحي ظرف مريم
+        </button>
+        <div class="paper" id="maryam">
+          <img class="portrait" src="" alt="صورة مريم" id="maryamPhoto">
+          <h3>حكايتي أنا ومحمد</h3>
+          <p>هنا هنحط حكايتك وصورتك الحقيقية بعد ما نضيفهم للموقع.</p>
+        </div>
+      </section>
+
+      <section class="envelope-card">
+        <h2>حكاية محمد 💌</h2>
+        <div class="envelope" onclick="openLetter('mohamed')"></div>
+        <button class="open-btn" onclick="openLetter('mohamed')">
+          افتح ظرف محمد
+        </button>
+        <div class="paper" id="mohamed">
+          <img class="portrait" src="" alt="صورة محمد">
+          <h3>حكايتك يا محمد</h3>
+          <textarea id="story" placeholder="اكتب حكايتك هنا يا محمد..."></textarea>
+          <button class="save" onclick="saveStory()">حفظ الحكاية 💗</button>
+          <p class="note" id="saveStatus">
+            الحفظ الأونلاين هنوصلّه في الخطوات الجاية.
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    function enterSite() {
+      const intro = document.getElementById("intro");
+      intro.style.opacity = "0";
+      intro.style.visibility = "hidden";
+    }
+
+    function openLetter(id) {
+      const paper = document.getElementById(id);
+      const card = paper.closest(".envelope-card");
+      const envelope = card.querySelector(".envelope");
+
+      paper.classList.toggle("show");
+      envelope.classList.toggle("open");
+    }
+
+    function saveStory() {
+      document.getElementById("saveStatus").textContent =
+        "لسه هنربط الحفظ الأونلاين بـ Supabase في الخطوة الجاية 💗";
+    }
+  </script>
+
+</body>
+</html>
