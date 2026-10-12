@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -17,36 +16,42 @@
   --ink: #87365f;
 }
 
+html {
+  min-height: 100%;
+  background: #f7c5dd;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
   overflow-x: hidden;
   font-family: Arial, sans-serif;
   color: var(--ink);
-  background: #f8c5dc;
+  background: #f7c5dd;
 }
 
-/* الدوامة اللي ورا الموقع كله */
+/* الدوامة في الخلفية */
 .vortex {
   position: fixed;
-  inset: -65%;
-  z-index: -2;
+  inset: -45vmax;
+  z-index: 0;
   pointer-events: none;
+  border-radius: 50%;
   background:
     repeating-conic-gradient(
       from 0deg,
-      #fce6f1 0deg 9deg,
-      #ed8cba 13deg 23deg,
-      #bc3c7e 28deg 34deg,
-      #ffddeb 40deg 51deg
+      #fff0f7 0deg 12deg,
+      #f5a5ca 18deg 28deg,
+      #c74783 34deg 40deg,
+      #ffddeb 47deg 58deg
     );
   -webkit-mask-image: radial-gradient(
-    ellipse, transparent 0%, #000 13%, #000 100%
+    circle, transparent 0 7%, #000 15% 100%
   );
   mask-image: radial-gradient(
-    ellipse, transparent 0%, #000 13%, #000 100%
+    circle, transparent 0 7%, #000 15% 100%
   );
-  animation: vortexSpin 13s linear infinite;
+  animation: vortexSpin 18s linear infinite;
   filter: blur(2px);
 }
 
@@ -54,45 +59,54 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at center,
-      #fff1f8 0%,
-      #f8c3dd 45%,
-      #df70a5 100%);
-  opacity: .75;
+    radial-gradient(
+      circle at center,
+      #fff0f8 0%,
+      #f8c9df 45%,
+      #e991bb 100%
+    );
+  opacity: .82;
 }
 
-@keyframes vortexSpin {
-  from { transform: rotate(0deg) scale(1); }
-  to   { transform: rotate(360deg) scale(1.04); }
-}
-
-/* الموقع بيتسحب لجوا وبعدين يظهر */
+/* حركة الدخول: خمس ثوانٍ من المركز */
 .scene {
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
   padding: 48px 18px 35px;
   text-align: center;
   transform-origin: center center;
-  animation: pulledIn 2.4s cubic-bezier(.2,.8,.2,1) both;
+  animation: pulledIn 5s cubic-bezier(.2,.75,.25,1) both;
 }
 
 @keyframes pulledIn {
   0% {
     opacity: 0;
-    transform: scale(.04) rotate(-540deg);
-    filter: blur(18px);
+    transform: scale(.08) rotate(-360deg);
+    filter: blur(12px);
   }
+
+  25% {
+    opacity: .4;
+    transform: scale(.22) rotate(-270deg);
+    filter: blur(7px);
+  }
+
   55% {
-    opacity: 1;
-    transform: scale(.48) rotate(-190deg);
-    filter: blur(5px);
+    opacity: .8;
+    transform: scale(.55) rotate(-140deg);
+    filter: blur(3px);
   }
-  78% {
-    transform: scale(1.07) rotate(12deg);
+
+  80% {
+    opacity: 1;
+    transform: scale(1.03) rotate(-25deg);
     filter: blur(0);
   }
+
   100% {
     opacity: 1;
     transform: scale(1) rotate(0deg);
@@ -100,7 +114,13 @@ body::before {
   }
 }
 
+@keyframes vortexSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
 h1 {
+  direction: ltr;
   font-family: Georgia, serif;
   font-size: clamp(35px, 7vw, 65px);
   font-weight: normal;
@@ -112,13 +132,15 @@ h1 {
 
 @keyframes titleGlow {
   from { text-shadow: 0 0 8px #fff; }
-  to   { text-shadow: 0 0 28px #fff, 0 0 42px #ed91bc; }
+  to {
+    text-shadow: 0 0 25px #fff, 0 0 40px #ed91bc;
+  }
 }
 
-/* الظرفين */
+/* بطاقتا الظرفين */
 .envelopes {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   gap: clamp(18px, 5vw, 55px);
   flex-wrap: wrap;
@@ -129,7 +151,7 @@ h1 {
 .card {
   width: min(100%, 330px);
   padding: 25px 20px;
-  border: 1px solid #fff9;
+  border: 1px solid #ffffffbd;
   border-radius: 28px;
   background: linear-gradient(
     145deg,
@@ -149,7 +171,7 @@ h1 {
 
 @keyframes floatCard {
   0%, 100% { transform: translateY(0) rotate(-1deg); }
-  50%      { transform: translateY(-9px) rotate(1deg); }
+  50% { transform: translateY(-7px) rotate(1deg); }
 }
 
 .card h2 {
@@ -158,7 +180,7 @@ h1 {
   color: #a53c71;
 }
 
-/* الظرف مرسوم بالكود، مش صورة */
+/* الظرف مرسوم بالكود */
 .envelope {
   position: relative;
   width: min(100%, 245px);
@@ -171,7 +193,7 @@ h1 {
 }
 
 .envelope:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
 }
 
 .envelope .back {
@@ -198,7 +220,9 @@ h1 {
   inset: 0;
   z-index: 3;
   background: #f4a5ca;
-  clip-path: polygon(0 0, 50% 57%, 100% 0, 100% 100%, 0 100%);
+  clip-path: polygon(
+    0 0, 50% 57%, 100% 0, 100% 100%, 0 100%
+  );
   border-radius: 0 0 8px 8px;
 }
 
@@ -223,7 +247,6 @@ h1 {
   transition: opacity .3s;
 }
 
-/* فتح الظرف وطلوع الورقة */
 .envelope.open .flap {
   transform: rotateX(180deg);
   z-index: 0;
@@ -237,6 +260,7 @@ h1 {
   opacity: 0;
 }
 
+/* الزرارين تحت الأظرف */
 .story-button {
   display: inline-block;
   min-width: 185px;
@@ -257,6 +281,7 @@ h1 {
   box-shadow: 0 9px 22px #a92d7050;
 }
 
+/* الورقة التي تظهر من الظرف */
 .paper {
   display: none;
   margin-top: 20px;
@@ -333,14 +358,11 @@ textarea {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .scene {
-    animation-duration: .2s;
-  }
-
+  .scene,
   .vortex,
   .card,
   h1 {
-    animation-duration: 20s;
+    animation: none;
   }
 }
 </style>
@@ -378,11 +400,10 @@ textarea {
 
       <div class="paper" id="maryam">
         <img class="photo" id="maryamPhoto"
-             src="" alt="صورة مريم"
-             hidden>
-        <h3>دي حكايتي 💗</h3>
+             src="" alt="صورة مريم" hidden>
+        <h3>دي حكايتي</h3>
         <p id="maryamStory">
-          هنا هنضيف صورتك وحكايتك اللي كتبتيها.
+          هنا هنضيف صورتك وحكايتك.
         </p>
       </div>
     </section>
@@ -410,9 +431,8 @@ textarea {
 
       <div class="paper" id="mohamed">
         <img class="photo" id="mohamedPhoto"
-             src="" alt="صورة محمد"
-             hidden>
-        <h3>حكايتك يا محمد</h3>
+             src="" alt="صورة محمد" hidden>
+        <h3>حكايتك</h3>
         <textarea id="story"
           placeholder="اكتب حكايتك هنا..."></textarea>
         <button class="story-button"
@@ -420,7 +440,7 @@ textarea {
           حفظ الحكاية
         </button>
         <p class="status" id="saveStatus">
-          هنفعّل الحفظ المشترك أونلاين في الخطوة الجاية.
+          الحفظ المشترك هيتضاف في الخطوة الجاية.
         </p>
       </div>
     </section>
@@ -431,14 +451,13 @@ textarea {
 <script>
 function toggleLetter(id) {
   const paper = document.getElementById(id);
-  const isOpening = !paper.classList.contains("show");
-  const envelopeId = id === "maryam"
-    ? "envMaryam"
-    : "envMohamed";
+  const opening = !paper.classList.contains("show");
+  const envelopeId =
+    id === "maryam" ? "envMaryam" : "envMohamed";
 
-  paper.classList.toggle("show");
+  paper.classList.toggle("show", opening);
   document.getElementById(envelopeId)
-    .classList.toggle("open", isOpening);
+    .classList.toggle("open", opening);
 }
 
 function keyOpen(event, id) {
@@ -450,7 +469,7 @@ function keyOpen(event, id) {
 
 function saveStory() {
   document.getElementById("saveStatus").textContent =
-    "الحفظ المشترك لسه محتاج ربط Supabase.";
+    "لسه هنربط الحفظ المشترك بـ Supabase.";
 }
 </script>
 
