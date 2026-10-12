@@ -20,10 +20,11 @@ body{
     radial-gradient(ellipse at 80% 80%,#d8759f 0,transparent 45%),
     linear-gradient(135deg,#f8c9da,#e8a2bd,#f9d9e5);
 }
+
 button,input,textarea{font:inherit}
 button{cursor:pointer}
 
-/* شاشة كلمة السر */
+/* شاشة الباسورد */
 .password-screen{
   position:fixed;
   inset:0;
@@ -37,6 +38,7 @@ button{cursor:pointer}
     radial-gradient(ellipse at 80% 80%,#d8759f 0,transparent 45%),
     linear-gradient(135deg,#f8c9da,#e8a2bd,#f9d9e5);
 }
+
 .password-card{
   width:min(100%,390px);
   padding:30px 22px;
@@ -45,11 +47,12 @@ button{cursor:pointer}
   background:#fff8fbef;
   box-shadow:0 15px 45px #8b315755;
 }
+
 .password-card h1{
-  margin:0 0 12px;
+  margin:0 0 20px;
   color:#a63368;
 }
-.password-card p{line-height:1.8}
+
 .password-card input{
   width:100%;
   padding:13px;
@@ -59,6 +62,7 @@ button{cursor:pointer}
   text-align:center;
   background:white;
 }
+
 .password-card button{
   margin-top:15px;
   padding:12px 25px;
@@ -68,8 +72,9 @@ button{cursor:pointer}
   color:white;
   font-weight:bold;
 }
+
 .password-error{
-  min-height:24px;
+  min-height:20px;
   color:#b42350;
   font-size:14px;
 }
@@ -84,11 +89,11 @@ button{cursor:pointer}
   padding:25px 16px;
   text-align:center;
 }
+
 .heading{
   font-size:clamp(30px,6vw,46px);
   margin:0 0 12px;
 }
-.sub{font-size:17px;margin:0 0 55px}
 
 .envelopes{
   display:flex;
@@ -97,6 +102,7 @@ button{cursor:pointer}
   gap:35px;
   flex-wrap:wrap;
 }
+
 .envelope{
   position:relative;
   width:220px;
@@ -106,6 +112,7 @@ button{cursor:pointer}
   box-shadow:0 15px 35px #8b315744;
   transition:transform .7s,opacity .7s;
 }
+
 .envelope:before,.envelope:after{
   content:"";
   position:absolute;
@@ -115,16 +122,19 @@ button{cursor:pointer}
   border-style:solid;
   z-index:1;
 }
+
 .envelope:before{
   left:0;
   border-width:75px 110px 0;
   border-color:#f6c5d8 transparent transparent;
 }
+
 .envelope:after{
   right:0;
   border-width:0 110px 75px;
   border-color:transparent transparent #fbdce8;
 }
+
 .flap{
   position:absolute;
   top:0;
@@ -138,6 +148,7 @@ button{cursor:pointer}
   transition:transform .5s;
   z-index:2;
 }
+
 .envelope button{
   position:absolute;
   z-index:3;
@@ -153,8 +164,10 @@ button{cursor:pointer}
   font-weight:bold;
   box-shadow:0 3px 12px #8b315722;
 }
+
 .envelope.chosen{transform:scale(1.15)}
 .envelope.chosen .flap{transform:rotateX(180deg)}
+
 .hint{margin-top:40px}
 
 /* صفحات الحكايات */
@@ -163,7 +176,12 @@ button{cursor:pointer}
   min-height:100vh;
   padding:25px 14px 45px;
 }
-.page.active{display:block;animation:appear .7s ease}
+
+.page.active{
+  display:block;
+  animation:appear .7s ease;
+}
+
 .paper{
   max-width:760px;
   margin:auto;
@@ -172,6 +190,7 @@ button{cursor:pointer}
   background:#fff8fbdd;
   box-shadow:0 12px 40px #8b315733;
 }
+
 .title{
   color:#a63368;
   text-align:center;
@@ -179,6 +198,7 @@ button{cursor:pointer}
   font-weight:800;
   margin:5px 0 25px;
 }
+
 .person-photo{
   display:block;
   width:180px;
@@ -190,6 +210,7 @@ button{cursor:pointer}
   box-shadow:0 5px 20px #9d3d6830;
   margin:0 auto 28px;
 }
+
 .story{
   font-size:18px;
   font-weight:700;
@@ -198,6 +219,7 @@ button{cursor:pointer}
   text-align:right;
   overflow-wrap:anywhere;
 }
+
 textarea{
   display:block;
   width:100%;
@@ -211,6 +233,7 @@ textarea{
   line-height:1.9;
   resize:vertical;
 }
+
 .back,.save{
   display:block;
   margin:25px auto 0;
@@ -221,11 +244,13 @@ textarea{
   color:white;
   font-weight:bold;
 }
+
 .status,.notice{
   text-align:center;
   line-height:1.8;
   font-size:14px;
 }
+
 .status{font-weight:bold}
 .notice{color:#87536c}
 
@@ -237,10 +262,16 @@ textarea{
   inset:-30%;
   pointer-events:none;
   background:
-    repeating-radial-gradient(ellipse at center,
-    #fff0f6 0 7px,#e99bbb 15px,#cf4f89 28px,#f8c5d9 42px);
+    repeating-radial-gradient(
+      ellipse at center,
+      #fff0f6 0 7px,
+      #e99bbb 15px,
+      #cf4f89 28px,
+      #f8c5d9 42px
+    );
   border-radius:50%;
 }
+
 .vortex.go{
   display:block;
   animation:portal 5s ease-in-out forwards;
@@ -254,6 +285,7 @@ textarea{
   overflow:hidden;
   z-index:0;
 }
+
 .heart{
   position:absolute;
   bottom:-30px;
@@ -262,6 +294,7 @@ textarea{
   text-shadow:0 0 8px #fff4fa,0 0 15px #d94d8c;
   animation:floatUp linear infinite;
 }
+
 .home,.page{position:relative;z-index:1}
 
 @keyframes portal{
@@ -270,20 +303,25 @@ textarea{
   75%{opacity:1;transform:scale(1.5) rotate(720deg)}
   100%{opacity:0;transform:scale(4) rotate(1080deg)}
 }
+
 @keyframes appear{
   from{opacity:0;transform:scale(.97)}
   to{opacity:1;transform:scale(1)}
 }
+
 @keyframes floatUp{
   to{transform:translateY(-115vh) rotate(30deg);opacity:0}
 }
+
 @media(max-width:520px){
   .envelopes{gap:45px}
   .envelope{width:205px}
+
   .flap{
     border-left-width:102px;
     border-right-width:102px;
   }
+
   .envelope:before{border-width:75px 102px 0}
   .envelope:after{border-width:0 102px 75px}
   .story{font-size:17px}
@@ -293,20 +331,21 @@ textarea{
 
 <body>
 
-<!-- شاشة الباسورد -->
+<!-- شاشة الدخول -->
 <section class="password-screen" id="passwordScreen">
   <div class="password-card">
     <h1>حكايتنا ♡</h1>
-    <p>الحكاية دي ليها مفتاح صغير 💗</p>
+
     <form onsubmit="checkPassword(event)">
       <input
         id="sitePassword"
         type="password"
-        placeholder="اكتبي كلمة السر"
+        placeholder="اكتب الباسورد"
         autocomplete="off"
         required
       >
-      <button type="submit">افتحي الحكاية ♡</button>
+
+      <button type="submit">دخول</button>
       <p id="passwordError" class="password-error"></p>
     </form>
   </div>
@@ -366,7 +405,10 @@ textarea{
       alt="محمد"
     >
 
-    <textarea id="mohamedStory" placeholder="اكتب حكايتك هنا..."></textarea>
+    <textarea
+      id="mohamedStory"
+      placeholder="اكتب حكايتك هنا..."
+    ></textarea>
 
     <button class="save" onclick="saveStory()">حفظ الحكاية</button>
     <p id="saveStatus" class="status"></p>
@@ -385,7 +427,7 @@ const home = document.getElementById('home');
 const vortex = document.getElementById('vortex');
 let busy = false;
 
-/* التحقق من كلمة السر */
+/* التحقق من الباسورد */
 function checkPassword(event){
   event.preventDefault();
 
@@ -396,7 +438,7 @@ function checkPassword(event){
     document.getElementById('passwordScreen').remove();
     home.style.display = 'flex';
   }else{
-    error.textContent = 'كلمة السر مش صح، جربي تاني 💗';
+    error.textContent = 'الباسورد غلط';
     input.value = '';
     input.focus();
   }
@@ -458,7 +500,7 @@ function goHome(){
   });
 }
 
-/* حفظ حكاية محمد على نفس المتصفح */
+/* حفظ حكاية محمد */
 function saveStory(){
   const value = document.getElementById('mohamedStory').value;
   const status = document.getElementById('saveStatus');
@@ -471,7 +513,7 @@ function saveStory(){
   }
 }
 
-/* استرجاع الحكاية المحفوظة */
+/* تحميل الحكاية المحفوظة */
 function loadStory(){
   try{
     document.getElementById('mohamedStory').value =
@@ -482,7 +524,7 @@ function loadStory(){
   }
 }
 
-/* قلوب متحركة وواضحة */
+/* القلوب المتحركة */
 for(let i=0;i<22;i++){
   const heart = document.createElement('span');
 
