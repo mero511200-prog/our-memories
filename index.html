@@ -2,476 +2,354 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our Little World</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>حكايتنا ♡</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Tahoma,Arial,sans-serif;
+  color:#713750;
+  background:#e9a8bf;
+  background-image:
+    radial-gradient(ellipse at 20% 20%,#ffe6ef 0,transparent 45%),
+    radial-gradient(ellipse at 80% 80%,#d8759f 0,transparent 45%),
+    linear-gradient(135deg,#f8c9da,#e8a2bd,#f9d9e5);
 }
-
-:root {
-  --pink: #f7b8d3;
-  --deep: #b83d7a;
-  --ink: #87365f;
+button,textarea{font:inherit}
+button{cursor:pointer}
+.home{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:25px 16px;
+  text-align:center;
 }
-
-html {
-  min-height: 100%;
-  background: #f7c5dd;
+.heading{font-size:clamp(30px,6vw,46px);margin:0 0 12px}
+.sub{font-size:17px;margin:0 0 55px}
+.envelopes{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:35px;
+  flex-wrap:wrap;
 }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  overflow-x: hidden;
-  font-family: Arial, sans-serif;
-  color: var(--ink);
-  background: #f7c5dd;
+.envelope{
+  position:relative;
+  width:220px;
+  height:150px;
+  background:#fff2f7;
+  border-radius:8px;
+  box-shadow:0 15px 35px #8b315744;
+  transition:transform .7s,opacity .7s;
 }
-
-/* الدوامة في الخلفية */
-.vortex {
-  position: fixed;
-  inset: -45vmax;
-  z-index: 0;
-  pointer-events: none;
-  border-radius: 50%;
+.envelope:before,.envelope:after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  width:0;height:0;
+  border-style:solid;
+  z-index:1;
+}
+.envelope:before{
+  left:0;
+  border-width:75px 110px 0;
+  border-color:#f6c5d8 transparent transparent;
+}
+.envelope:after{
+  right:0;
+  border-width:0 110px 75px;
+  border-color:transparent transparent #fbdce8;
+}
+.flap{
+  position:absolute;
+  top:0;left:0;
+  width:0;height:0;
+  border-left:110px solid transparent;
+  border-right:110px solid transparent;
+  border-top:85px solid #e9a4bf;
+  transform-origin:top;
+  transition:transform .5s;
+  z-index:2;
+}
+.envelope button{
+  position:absolute;
+  z-index:3;
+  bottom:25px;
+  left:50%;
+  transform:translateX(-50%);
+  width:85%;
+  padding:11px 5px;
+  border:0;
+  border-radius:25px;
+  background:#fff8fb;
+  color:#9d3d68;
+  font-weight:bold;
+  box-shadow:0 3px 12px #8b315722;
+}
+.envelope.chosen{transform:scale(1.15)}
+.envelope.chosen .flap{transform:rotateX(180deg)}
+.hint{margin-top:40px}
+.page{
+  display:none;
+  min-height:100vh;
+  padding:25px 14px 45px;
+}
+.page.active{display:block;animation:appear .7s ease}
+.paper{
+  max-width:760px;
+  margin:auto;
+  padding:25px clamp(16px,4vw,38px);
+  border-radius:18px;
+  background:#fff8fbdd;
+  box-shadow:0 12px 40px #8b315733;
+}
+.title{
+  color:#a63368;
+  text-align:center;
+  font-size:clamp(25px,5vw,36px);
+  font-weight:800;
+  margin:5px 0 25px;
+}
+.maryam-photo{
+  display:block;
+  width:180px;
+  height:180px;
+  max-width:65vw;
+  object-fit:cover;
+  border-radius:50%;
+  border:4px solid #f5bfd4;
+  box-shadow:0 5px 20px #9d3d6830;
+  margin:0 auto 28px;
+}
+.story{
+  font-size:18px;
+  font-weight:700;
+  line-height:2.1;
+  white-space:pre-line;
+  text-align:right;
+  overflow-wrap:anywhere;
+}
+textarea{
+  display:block;
+  width:100%;
+  min-height:300px;
+  padding:15px;
+  border:1px solid #e6a3bf;
+  border-radius:12px;
+  background:#fffdfd;
+  color:#713750;
+  font-weight:600;
+  line-height:1.9;
+  resize:vertical;
+}
+.back,.save{
+  display:block;
+  margin:25px auto 0;
+  padding:12px 25px;
+  border:0;
+  border-radius:28px;
+  background:#ae3e70;
+  color:white;
+  font-weight:bold;
+}
+.status,.notice{
+  text-align:center;
+  line-height:1.8;
+  font-size:14px;
+}
+.status{font-weight:bold}
+.notice{color:#87536c}
+.vortex{
+  display:none;
+  position:fixed;
+  z-index:10;
+  inset:-30%;
+  pointer-events:none;
   background:
-    repeating-conic-gradient(
-      from 0deg,
-      #fff0f7 0deg 12deg,
-      #f5a5ca 18deg 28deg,
-      #c74783 34deg 40deg,
-      #ffddeb 47deg 58deg
-    );
-  -webkit-mask-image: radial-gradient(
-    circle, transparent 0 7%, #000 15% 100%
-  );
-  mask-image: radial-gradient(
-    circle, transparent 0 7%, #000 15% 100%
-  );
-  animation: vortexSpin 18s linear infinite;
-  filter: blur(2px);
+    repeating-radial-gradient(ellipse at center,
+    #fff0f6 0 7px,#e99bbb 15px,#cf4f89 28px,#f8c5d9 42px);
+  border-radius:50%;
 }
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      circle at center,
-      #fff0f8 0%,
-      #f8c9df 45%,
-      #e991bb 100%
-    );
-  opacity: .82;
+.vortex.go{
+  display:block;
+  animation:portal 5s ease-in-out forwards;
 }
-
-/* حركة الدخول: خمس ثوانٍ من المركز */
-.scene {
-  position: relative;
-  z-index: 1;
-  min-height: 100vh;
-  padding: 48px 18px 35px;
-  text-align: center;
-  transform-origin: center center;
-  animation: pulledIn 5s cubic-bezier(.2,.75,.25,1) both;
+.hearts{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:0;
 }
-
-@keyframes pulledIn {
-  0% {
-    opacity: 0;
-    transform: scale(.08) rotate(-360deg);
-    filter: blur(12px);
+.heart{
+  position:absolute;
+  bottom:-30px;
+  color:#bd477b;
+  opacity:.3;
+  animation:floatUp linear infinite;
+}
+.home,.page{position:relative;z-index:1}
+@keyframes portal{
+  0%{opacity:0;transform:scale(.05) rotate(0)}
+  15%{opacity:1}
+  75%{opacity:1;transform:scale(1.5) rotate(720deg)}
+  100%{opacity:0;transform:scale(4) rotate(1080deg)}
+}
+@keyframes appear{
+  from{opacity:0;transform:scale(.97)}
+  to{opacity:1;transform:scale(1)}
+}
+@keyframes floatUp{
+  to{transform:translateY(-115vh) rotate(30deg);opacity:0}
+}
+@media(max-width:520px){
+  .envelopes{gap:45px}
+  .envelope{width:205px}
+  .flap{
+    border-left-width:102px;
+    border-right-width:102px;
   }
-
-  25% {
-    opacity: .4;
-    transform: scale(.22) rotate(-270deg);
-    filter: blur(7px);
-  }
-
-  55% {
-    opacity: .8;
-    transform: scale(.55) rotate(-140deg);
-    filter: blur(3px);
-  }
-
-  80% {
-    opacity: 1;
-    transform: scale(1.03) rotate(-25deg);
-    filter: blur(0);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-    filter: blur(0);
-  }
-}
-
-@keyframes vortexSpin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-h1 {
-  direction: ltr;
-  font-family: Georgia, serif;
-  font-size: clamp(35px, 7vw, 65px);
-  font-weight: normal;
-  color: #a73870;
-  margin: 10px 0 36px;
-  text-shadow: 0 2px 18px #fff;
-  animation: titleGlow 3s ease-in-out infinite alternate;
-}
-
-@keyframes titleGlow {
-  from { text-shadow: 0 0 8px #fff; }
-  to {
-    text-shadow: 0 0 25px #fff, 0 0 40px #ed91bc;
-  }
-}
-
-/* بطاقتا الظرفين */
-.envelopes {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: clamp(18px, 5vw, 55px);
-  flex-wrap: wrap;
-  max-width: 850px;
-  margin: 0 auto;
-}
-
-.card {
-  width: min(100%, 330px);
-  padding: 25px 20px;
-  border: 1px solid #ffffffbd;
-  border-radius: 28px;
-  background: linear-gradient(
-    145deg,
-    #fff8fcf2,
-    #fce3eff0
-  );
-  box-shadow:
-    0 18px 55px #922b5d30,
-    inset 0 0 25px #fff9;
-  backdrop-filter: blur(10px);
-  animation: floatCard 4s ease-in-out infinite;
-}
-
-.card:nth-child(2) {
-  animation-delay: -2s;
-}
-
-@keyframes floatCard {
-  0%, 100% { transform: translateY(0) rotate(-1deg); }
-  50% { transform: translateY(-7px) rotate(1deg); }
-}
-
-.card h2 {
-  font-size: 25px;
-  margin: 0 0 20px;
-  color: #a53c71;
-}
-
-/* الظرف مرسوم بالكود */
-.envelope {
-  position: relative;
-  width: min(100%, 245px);
-  height: 155px;
-  margin: 15px auto 18px;
-  cursor: pointer;
-  perspective: 700px;
-  filter: drop-shadow(0 10px 9px #a536682b);
-  transition: transform .3s;
-}
-
-.envelope:hover {
-  transform: translateY(-4px);
-}
-
-.envelope .back {
-  position: absolute;
-  inset: 0;
-  background: #e985b3;
-  border-radius: 8px;
-}
-
-.envelope .letter {
-  position: absolute;
-  z-index: 1;
-  left: 8%;
-  width: 84%;
-  height: 90%;
-  bottom: 3%;
-  border-radius: 8px;
-  background: #fffafd;
-  transition: transform .8s ease;
-}
-
-.envelope .front {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  background: #f4a5ca;
-  clip-path: polygon(
-    0 0, 50% 57%, 100% 0, 100% 100%, 0 100%
-  );
-  border-radius: 0 0 8px 8px;
-}
-
-.envelope .flap {
-  position: absolute;
-  z-index: 4;
-  inset: 0;
-  background: #f9c6de;
-  clip-path: polygon(0 0, 100% 0, 50% 59%);
-  transform-origin: top center;
-  transition: transform .65s ease;
-}
-
-.envelope .seal {
-  position: absolute;
-  z-index: 5;
-  left: 50%;
-  top: 43%;
-  transform: translate(-50%, -50%);
-  color: #b42f70;
-  font-size: 31px;
-  transition: opacity .3s;
-}
-
-.envelope.open .flap {
-  transform: rotateX(180deg);
-  z-index: 0;
-}
-
-.envelope.open .letter {
-  transform: translateY(-78px);
-}
-
-.envelope.open .seal {
-  opacity: 0;
-}
-
-/* الزرارين تحت الأظرف */
-.story-button {
-  display: inline-block;
-  min-width: 185px;
-  padding: 13px 22px;
-  border: 0;
-  border-radius: 30px;
-  color: white;
-  background: linear-gradient(135deg, #d85291, #a92d70);
-  box-shadow: 0 6px 16px #a92d7040;
-  font: inherit;
-  font-size: 17px;
-  cursor: pointer;
-  transition: transform .2s, box-shadow .2s;
-}
-
-.story-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 9px 22px #a92d7050;
-}
-
-/* الورقة التي تظهر من الظرف */
-.paper {
-  display: none;
-  margin-top: 20px;
-  padding: 16px;
-  border-radius: 18px;
-  background: #fffafd;
-  text-align: right;
-  animation: paperRise .7s ease both;
-}
-
-.paper.show {
-  display: block;
-}
-
-@keyframes paperRise {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(.96);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.photo {
-  display: block;
-  width: 150px;
-  height: 150px;
-  max-width: 100%;
-  margin: 0 auto 14px;
-  object-fit: cover;
-  border-radius: 18px;
-  background: #f8d9e8;
-  border: 3px solid white;
-  box-shadow: 0 4px 18px #ad477630;
-}
-
-.paper h3 {
-  text-align: center;
-}
-
-textarea {
-  display: block;
-  width: 100%;
-  min-height: 150px;
-  resize: vertical;
-  padding: 12px;
-  border: 1px solid #e5a4c5;
-  border-radius: 12px;
-  background: white;
-  font: inherit;
-  line-height: 1.8;
-}
-
-.status {
-  text-align: center;
-  font-size: 13px;
-  color: #965575;
-}
-
-@media (max-width: 600px) {
-  .scene {
-    padding-top: 28px;
-  }
-
-  .card {
-    padding: 22px 15px;
-  }
-
-  .envelopes {
-    gap: 25px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scene,
-  .vortex,
-  .card,
-  h1 {
-    animation: none;
-  }
+  .envelope:before{border-width:75px 102px 0}
+  .envelope:after{border-width:0 102px 75px}
+  .story{font-size:17px}
 }
 </style>
 </head>
 
 <body>
+<div class="vortex" id="vortex"></div>
+<div class="hearts" id="hearts"></div>
 
-<div class="vortex" aria-hidden="true"></div>
-
-<main class="scene">
-  <h1>Our Little World</h1>
+<main class="home" id="home">
+  <h1 class="heading">حكايتنا ♡</h1>
+  <p class="sub">كل واحد فينا عنده حكاية تستاهل تتحكي</p>
 
   <div class="envelopes">
-
-    <!-- ظرف مريم -->
-    <section class="card">
-      <h2>حكاية مريم</h2>
-
-      <div class="envelope" id="envMaryam"
-           role="button" tabindex="0"
-           aria-label="فتح ظرف مريم"
-           onclick="toggleLetter('maryam')"
-           onkeydown="keyOpen(event, 'maryam')">
-        <div class="back"></div>
-        <div class="letter"></div>
-        <div class="front"></div>
-        <div class="flap"></div>
-        <div class="seal">♥</div>
-      </div>
-
-      <button class="story-button"
-              onclick="toggleLetter('maryam')">
-        دي حكايتي
+    <section class="envelope" id="envMaryam">
+      <div class="flap"></div>
+      <button onclick="openPage('maryam','envMaryam')">
+        حكاية مريم
       </button>
-
-      <div class="paper" id="maryam">
-        <img class="photo" id="maryamPhoto"
-             src="" alt="صورة مريم" hidden>
-        <h3>دي حكايتي</h3>
-        <p id="maryamStory">
-          هنا هنضيف صورتك وحكايتك.
-        </p>
-      </div>
     </section>
 
-    <!-- ظرف محمد -->
-    <section class="card">
-      <h2>حكاية محمد</h2>
-
-      <div class="envelope" id="envMohamed"
-           role="button" tabindex="0"
-           aria-label="فتح ظرف محمد"
-           onclick="toggleLetter('mohamed')"
-           onkeydown="keyOpen(event, 'mohamed')">
-        <div class="back"></div>
-        <div class="letter"></div>
-        <div class="front"></div>
-        <div class="flap"></div>
-        <div class="seal">♥</div>
-      </div>
-
-      <button class="story-button"
-              onclick="toggleLetter('mohamed')">
-        حكايتك
+    <section class="envelope" id="envMohamed">
+      <div class="flap"></div>
+      <button onclick="openPage('mohamed','envMohamed')">
+        حكاية محمد
       </button>
-
-      <div class="paper" id="mohamed">
-        <img class="photo" id="mohamedPhoto"
-             src="" alt="صورة محمد" hidden>
-        <h3>حكايتك</h3>
-        <textarea id="story"
-          placeholder="اكتب حكايتك هنا..."></textarea>
-        <button class="story-button"
-                onclick="saveStory()">
-          حفظ الحكاية
-        </button>
-        <p class="status" id="saveStatus">
-          الحفظ المشترك هيتضاف في الخطوة الجاية.
-        </p>
-      </div>
     </section>
-
   </div>
+
+  <p class="hint">اختاري الظرف عشان تفتحي الحكاية</p>
 </main>
 
-<script>
-function toggleLetter(id) {
-  const paper = document.getElementById(id);
-  const opening = !paper.classList.contains("show");
-  const envelopeId =
-    id === "maryam" ? "envMaryam" : "envMohamed";
+<section class="page" id="maryam">
+  <div class="paper">
+    <h2 class="title">☆ دي حكايتي ☆</h2>
 
-  paper.classList.toggle("show", opening);
-  document.getElementById(envelopeId)
-    .classList.toggle("open", opening);
+    <img
+      class="maryam-photo"
+      src="https://mero511200-prog.github.io/our-memories/67360c42-88bc-418e-b269-7950db6942c6.jpeg"
+      alt="مريم"
+    >
+
+    <div class="story">دي مريم بنت عاديه عاشت كتير ومريت بأكتر عمرها م حست بالحب الحقيقي او عاشته صحاب وحشين من هنا على اهل م كويسين معاها من هنا وحياتها اللي بايظه من هنا ... كانت حاسه انها مصلحه بالنسبه للي حوليها(مازالت) قابلت شاب بالصدفه جميل جدا قالتلو هسميك دوتشي ( علشان كان جلنف وحاطط صوره موسوليني بروف يوت) وفعلا ده حصل وبقت تقوله ي دوتشي بدء دوتشي(محمد) يحبها شويه شويه ويتقبلها وهيا كمان حبيته اوي اوي كانت متردده تقوله الصراحه كانت بتفكر فيه كتير وبعدين التفكير فيه زاد اوي محمد بدأ يغير عليها وينكر انو بيغير بس هيا من جواها عارفه انو بيحبها مجرد احساس بس لسه متأكدتش كلمها وقالها م بطريقه مباشره اه بس احسن بكتير من الطريقه المباشره هيا حبته اوي ومازلت بتحبه جدا جدا وبتعتبره كل حاجه ليها ف الدنيا والعوض ... وان شاء الله هيعيشو وهيتجوزو وهيخلفو بإذن الله وهيفتكرو كل حاجه حصلت بينهم زمان وهيحكوها لاحفادهم و ان قد اي قصتهم اجمل قصه .. ولو ده محصلش اوعدني ينور عيني انك تفتكرني بالحلو</div>
+
+    <button class="back" onclick="goHome()">رجوع للظرفين</button>
+  </div>
+</section>
+
+<section class="page" id="mohamed">
+  <div class="paper">
+    <h2 class="title">☆ حكاية محمد ☆</h2>
+
+    <textarea id="mohamedStory" placeholder="اكتب حكايتك هنا..."></textarea>
+
+    <button class="save" onclick="saveStory()">حفظ الحكاية</button>
+    <p id="saveStatus" class="status"></p>
+    <p class="notice">
+      الحفظ هنا على نفس الجهاز والمتصفح فقط.
+      المزامنة بين الأجهزة تحتاج قاعدة بيانات مشتركة.
+    </p>
+
+    <button class="back" onclick="goHome()">رجوع للظرفين</button>
+  </div>
+</section>
+
+<script>
+const home=document.getElementById('home');
+const vortex=document.getElementById('vortex');
+let busy=false;
+
+function transition(callback){
+  if(busy)return;
+  busy=true;
+  vortex.classList.remove('go');
+  void vortex.offsetWidth;
+  vortex.classList.add('go');
+
+  setTimeout(callback,2500);
+
+  setTimeout(()=>{
+    vortex.classList.remove('go');
+    busy=false;
+  },5100);
 }
 
-function keyOpen(event, id) {
-  if (event.key === "Enter" || event.key === " ") {
-    event.preventDefault();
-    toggleLetter(id);
+function openPage(id,envId){
+  document.getElementById(envId).classList.add('chosen');
+
+  transition(()=>{
+    home.style.display='none';
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+
+    if(id==='mohamed')loadStory();
+  });
+}
+
+function goHome(){
+  transition(()=>{
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    home.style.display='flex';
+    document.querySelectorAll('.envelope').forEach(e=>e.classList.remove('chosen'));
+    window.scrollTo(0,0);
+  });
+}
+
+function saveStory(){
+  const value=document.getElementById('mohamedStory').value;
+  const status=document.getElementById('saveStatus');
+
+  try{
+    localStorage.setItem('mohamedStory',value);
+    status.textContent='اتحفظت الحكاية على الجهاز ده.';
+  }catch(error){
+    status.textContent='الحفظ غير متاح في المتصفح ده.';
   }
 }
 
-function saveStory() {
-  document.getElementById("saveStatus").textContent =
-    "لسه هنربط الحفظ المشترك بـ Supabase.";
+function loadStory(){
+  document.getElementById('mohamedStory').value=
+    localStorage.getItem('mohamedStory')||'';
+}
+
+for(let i=0;i<12;i++){
+  const heart=document.createElement('span');
+  heart.className='heart';
+  heart.textContent='♡';
+  heart.style.left=Math.random()*100+'%';
+  heart.style.animationDuration=9+Math.random()*10+'s';
+  heart.style.animationDelay=-Math.random()*15+'s';
+  heart.style.fontSize=12+Math.random()*14+'px';
+  document.getElementById('hearts').appendChild(heart);
 }
 </script>
-
 </body>
 </html>
