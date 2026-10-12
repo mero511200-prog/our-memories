@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -7,6 +8,7 @@
 
 <style>
 *{box-sizing:border-box}
+
 body{
   margin:0;
   min-height:100vh;
@@ -18,8 +20,61 @@ body{
     radial-gradient(ellipse at 80% 80%,#d8759f 0,transparent 45%),
     linear-gradient(135deg,#f8c9da,#e8a2bd,#f9d9e5);
 }
-button,textarea{font:inherit}
+button,input,textarea{font:inherit}
 button{cursor:pointer}
+
+/* شاشة كلمة السر */
+.password-screen{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:
+    radial-gradient(ellipse at 20% 20%,#ffe6ef 0,transparent 45%),
+    radial-gradient(ellipse at 80% 80%,#d8759f 0,transparent 45%),
+    linear-gradient(135deg,#f8c9da,#e8a2bd,#f9d9e5);
+}
+.password-card{
+  width:min(100%,390px);
+  padding:30px 22px;
+  text-align:center;
+  border-radius:22px;
+  background:#fff8fbef;
+  box-shadow:0 15px 45px #8b315755;
+}
+.password-card h1{
+  margin:0 0 12px;
+  color:#a63368;
+}
+.password-card p{line-height:1.8}
+.password-card input{
+  width:100%;
+  padding:13px;
+  border:1px solid #e6a3bf;
+  border-radius:12px;
+  outline:none;
+  text-align:center;
+  background:white;
+}
+.password-card button{
+  margin-top:15px;
+  padding:12px 25px;
+  border:0;
+  border-radius:28px;
+  background:#ae3e70;
+  color:white;
+  font-weight:bold;
+}
+.password-error{
+  min-height:24px;
+  color:#b42350;
+  font-size:14px;
+}
+
+/* الصفحة الرئيسية */
 .home{
   min-height:100vh;
   display:flex;
@@ -29,8 +84,12 @@ button{cursor:pointer}
   padding:25px 16px;
   text-align:center;
 }
-.heading{font-size:clamp(30px,6vw,46px);margin:0 0 12px}
+.heading{
+  font-size:clamp(30px,6vw,46px);
+  margin:0 0 12px;
+}
 .sub{font-size:17px;margin:0 0 55px}
+
 .envelopes{
   display:flex;
   justify-content:center;
@@ -51,7 +110,8 @@ button{cursor:pointer}
   content:"";
   position:absolute;
   bottom:0;
-  width:0;height:0;
+  width:0;
+  height:0;
   border-style:solid;
   z-index:1;
 }
@@ -67,8 +127,10 @@ button{cursor:pointer}
 }
 .flap{
   position:absolute;
-  top:0;left:0;
-  width:0;height:0;
+  top:0;
+  left:0;
+  width:0;
+  height:0;
   border-left:110px solid transparent;
   border-right:110px solid transparent;
   border-top:85px solid #e9a4bf;
@@ -94,6 +156,8 @@ button{cursor:pointer}
 .envelope.chosen{transform:scale(1.15)}
 .envelope.chosen .flap{transform:rotateX(180deg)}
 .hint{margin-top:40px}
+
+/* صفحات الحكايات */
 .page{
   display:none;
   min-height:100vh;
@@ -115,7 +179,7 @@ button{cursor:pointer}
   font-weight:800;
   margin:5px 0 25px;
 }
-.maryam-photo{
+.person-photo{
   display:block;
   width:180px;
   height:180px;
@@ -164,6 +228,8 @@ textarea{
 }
 .status{font-weight:bold}
 .notice{color:#87536c}
+
+/* الدوامة الأصلية */
 .vortex{
   display:none;
   position:fixed;
@@ -179,6 +245,8 @@ textarea{
   display:block;
   animation:portal 5s ease-in-out forwards;
 }
+
+/* القلوب المتحركة */
 .hearts{
   position:fixed;
   inset:0;
@@ -189,11 +257,13 @@ textarea{
 .heart{
   position:absolute;
   bottom:-30px;
-  color:#bd477b;
-  opacity:.3;
+  color:#a92d65;
+  opacity:.72;
+  text-shadow:0 0 8px #fff4fa,0 0 15px #d94d8c;
   animation:floatUp linear infinite;
 }
 .home,.page{position:relative;z-index:1}
+
 @keyframes portal{
   0%{opacity:0;transform:scale(.05) rotate(0)}
   15%{opacity:1}
@@ -222,12 +292,32 @@ textarea{
 </head>
 
 <body>
+
+<!-- شاشة الباسورد -->
+<section class="password-screen" id="passwordScreen">
+  <div class="password-card">
+    <h1>حكايتنا ♡</h1>
+    <p>الحكاية دي ليها مفتاح صغير 💗</p>
+    <form onsubmit="checkPassword(event)">
+      <input
+        id="sitePassword"
+        type="password"
+        placeholder="اكتبي كلمة السر"
+        autocomplete="off"
+        required
+      >
+      <button type="submit">افتحي الحكاية ♡</button>
+      <p id="passwordError" class="password-error"></p>
+    </form>
+  </div>
+</section>
+
 <div class="vortex" id="vortex"></div>
 <div class="hearts" id="hearts"></div>
 
-<main class="home" id="home">
+<!-- الصفحة الرئيسية -->
+<main class="home" id="home" style="display:none">
   <h1 class="heading">حكايتنا ♡</h1>
-  <p class="sub">كل واحد فينا عنده حكاية تستاهل تتحكي</p>
 
   <div class="envelopes">
     <section class="envelope" id="envMaryam">
@@ -245,15 +335,16 @@ textarea{
     </section>
   </div>
 
-  <p class="hint">اختاري الظرف عشان تفتحي الحكاية</p>
+  <p class="hint">اختار الظرف يحمودي علشان تعرف الحكاية</p>
 </main>
 
+<!-- حكاية مريم -->
 <section class="page" id="maryam">
   <div class="paper">
     <h2 class="title">☆ دي حكايتي ☆</h2>
 
     <img
-      class="maryam-photo"
+      class="person-photo"
       src="https://mero511200-prog.github.io/our-memories/67360c42-88bc-418e-b269-7950db6942c6.jpeg"
       alt="مريم"
     >
@@ -264,14 +355,22 @@ textarea{
   </div>
 </section>
 
+<!-- حكاية محمد -->
 <section class="page" id="mohamed">
   <div class="paper">
     <h2 class="title">☆ حكاية محمد ☆</h2>
+
+    <img
+      class="person-photo"
+      src="https://mero511200-prog.github.io/our-memories/844825271_1134292242288933_6025568208439946724_n.jpg"
+      alt="محمد"
+    >
 
     <textarea id="mohamedStory" placeholder="اكتب حكايتك هنا..."></textarea>
 
     <button class="save" onclick="saveStory()">حفظ الحكاية</button>
     <p id="saveStatus" class="status"></p>
+
     <p class="notice">
       الحفظ هنا على نفس الجهاز والمتصفح فقط.
       المزامنة بين الأجهزة تحتاج قاعدة بيانات مشتركة.
@@ -282,13 +381,32 @@ textarea{
 </section>
 
 <script>
-const home=document.getElementById('home');
-const vortex=document.getElementById('vortex');
-let busy=false;
+const home = document.getElementById('home');
+const vortex = document.getElementById('vortex');
+let busy = false;
 
+/* التحقق من كلمة السر */
+function checkPassword(event){
+  event.preventDefault();
+
+  const input = document.getElementById('sitePassword');
+  const error = document.getElementById('passwordError');
+
+  if(input.value === 'maryam&mohamed'){
+    document.getElementById('passwordScreen').remove();
+    home.style.display = 'flex';
+  }else{
+    error.textContent = 'كلمة السر مش صح، جربي تاني 💗';
+    input.value = '';
+    input.focus();
+  }
+}
+
+/* حركة الدوامة */
 function transition(callback){
-  if(busy)return;
-  busy=true;
+  if(busy) return;
+
+  busy = true;
   vortex.classList.remove('go');
   void vortex.offsetWidth;
   vortex.classList.add('go');
@@ -297,59 +415,88 @@ function transition(callback){
 
   setTimeout(()=>{
     vortex.classList.remove('go');
-    busy=false;
+    busy = false;
   },5100);
 }
 
+/* فتح الحكاية */
 function openPage(id,envId){
+  if(busy) return;
+
   document.getElementById(envId).classList.add('chosen');
 
   transition(()=>{
-    home.style.display='none';
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    home.style.display = 'none';
+
+    document.querySelectorAll('.page').forEach(p=>{
+      p.classList.remove('active');
+    });
+
     document.getElementById(id).classList.add('active');
     window.scrollTo(0,0);
 
-    if(id==='mohamed')loadStory();
+    if(id === 'mohamed') loadStory();
   });
 }
 
+/* الرجوع للظرفين */
 function goHome(){
+  if(busy) return;
+
   transition(()=>{
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    home.style.display='flex';
-    document.querySelectorAll('.envelope').forEach(e=>e.classList.remove('chosen'));
+    document.querySelectorAll('.page').forEach(p=>{
+      p.classList.remove('active');
+    });
+
+    home.style.display = 'flex';
+
+    document.querySelectorAll('.envelope').forEach(e=>{
+      e.classList.remove('chosen');
+    });
+
     window.scrollTo(0,0);
   });
 }
 
+/* حفظ حكاية محمد على نفس المتصفح */
 function saveStory(){
-  const value=document.getElementById('mohamedStory').value;
-  const status=document.getElementById('saveStatus');
+  const value = document.getElementById('mohamedStory').value;
+  const status = document.getElementById('saveStatus');
 
   try{
     localStorage.setItem('mohamedStory',value);
-    status.textContent='اتحفظت الحكاية على الجهاز ده.';
+    status.textContent = 'اتحفظت الحكاية على الجهاز ده.';
   }catch(error){
-    status.textContent='الحفظ غير متاح في المتصفح ده.';
+    status.textContent = 'الحفظ غير متاح في المتصفح ده.';
   }
 }
 
+/* استرجاع الحكاية المحفوظة */
 function loadStory(){
-  document.getElementById('mohamedStory').value=
-    localStorage.getItem('mohamedStory')||'';
+  try{
+    document.getElementById('mohamedStory').value =
+      localStorage.getItem('mohamedStory') || '';
+  }catch(error){
+    document.getElementById('saveStatus').textContent =
+      'الحفظ غير متاح في المتصفح ده.';
+  }
 }
 
-for(let i=0;i<12;i++){
-  const heart=document.createElement('span');
-  heart.className='heart';
-  heart.textContent='♡';
-  heart.style.left=Math.random()*100+'%';
-  heart.style.animationDuration=9+Math.random()*10+'s';
-  heart.style.animationDelay=-Math.random()*15+'s';
-  heart.style.fontSize=12+Math.random()*14+'px';
+/* قلوب متحركة وواضحة */
+for(let i=0;i<22;i++){
+  const heart = document.createElement('span');
+
+  heart.className = 'heart';
+  heart.textContent = Math.random() > 0.5 ? '♡' : '♥';
+  heart.style.left = Math.random()*100 + '%';
+  heart.style.animationDuration = (9 + Math.random()*10) + 's';
+  heart.style.animationDelay = (-Math.random()*15) + 's';
+  heart.style.fontSize = (16 + Math.random()*16) + 'px';
+
   document.getElementById('hearts').appendChild(heart);
 }
 </script>
+
 </body>
 </html>
+```
